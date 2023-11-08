@@ -1,0 +1,22 @@
+body {
+    max-width: 1024px;
+    height: 100vh;
+    margin: 0 auto;
+    font-size: 1.4rem;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  #btn {
+    border: none;
+    padding: 1em 1.8em;
+    display: block;
+    background: #456;
+    font-size: 1.4rem;
+    font-family: sans-serif;
+    color: orange;
+
+  }
