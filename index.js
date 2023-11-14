@@ -5,18 +5,38 @@
 
     const cardsContainer = document.getElementById("cards")
     const winner = document.querySelector('#winner-text')
+    const remainingText = document.querySelector('#remainingCards')
 
 
+/**
+ * Challenge:
+ * 
+ * Display the number of cards remaining in the deck on the page
+ * Hint: Check the data that comes back when we draw 2 new cards
+ * to see if there's anything helpful there for this task (😉)
+ */
 
- function callback(){
-     fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
-        .then(response => response.json())
-        .then(deck => {
-                 
-            deckId = deck.deck_id;
-                    
-        })
-        
+/**
+ * Challenge:
+ * 
+ * Display the number of remaining cards when we request a new deck, 
+ * not just when we draw the 2 cards.
+ * 
+ * Hint: check the data coming back from when we get a new deck.
+ */
+
+
+/**
+ * Returns id of deck of cards
+ */
+    function callback(){
+        fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
+            .then(response => response.json())
+            .then(deck => { 
+                console.log(deck) 
+                deckId = deck.deck_id;       
+                remainingText.textContent = `Remaining cards: ${deck.remaining}`;
+            })  
     }
     
     newDeckBtn.addEventListener('click', callback)
@@ -26,6 +46,8 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data)
+                
+                remainingText.textContent = `Remaining cards: ${data.remaining}`;
             
                 cardsContainer.children[0].innerHTML = `
                     <img src=${data.cards[0].image} class="card" />` 
@@ -37,46 +59,6 @@
             })
     });
 
-/**
- * Challenge:
- * 
- * Try to determine which of the 2 cards is the "winner" (has higher value)
- * Aces are the card with the highest "score"
- * 
- * In parts:
- * 
- * 1. Create a function that takes 2 card objects as parameters, 
- * `card1` and `card2`. These card objects have a property called
- * `value`, which can be any one of the following strings, in
- * order of rising "score":
- * 
- * "2", "3", "4", "5", "6", "7", "8", "9", 
- * "10", "JACK", "QUEEN", "KING", "ACE"
- * 
- * I.e. "2" is the lowest score and "ACE" is the highest.
- * 
- * The function should determine which of the 2 cards (`card1`
- * or `card2`) has the higher score, or if they have the same score.
- * 
- * Log which card wins (or "It's a tie!" 
- * if they're the same) to the console
- */
-
-/**
- * Challenge:
- * 
- * Try to determine which of the 2 cards is the "winner" (has higher value)
- * Aces are the card with the highest "score"
- * 
- * Part 2:
- * Instead of logging the winner to the console, 
- * display an `h2` on the screen above the 2 cards 
- * that declares who the winner is.
- * 
- * If card1 is the higher card, display "Computer wins!"
- * If card2 is the higher card, display "You win!"
- * If they're equal, display "War!"
- */
 
 
 /**
