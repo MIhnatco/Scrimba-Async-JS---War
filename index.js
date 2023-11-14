@@ -7,24 +7,16 @@
     const winner = document.querySelector('#winner-text')
     const remainingText = document.querySelector('#remainingCards')
 
-
 /**
  * Challenge:
  * 
- * Display the number of cards remaining in the deck on the page
- * Hint: Check the data that comes back when we draw 2 new cards
- * to see if there's anything helpful there for this task (😉)
- */
-
-/**
- * Challenge:
+ * Disable the Draw button when we have no more cards to draw from
+ * in the deck.
  * 
- * Display the number of remaining cards when we request a new deck, 
- * not just when we draw the 2 cards.
- * 
- * Hint: check the data coming back from when we get a new deck.
+ * Disable both the functionality of the button (i.e. change
+ * `disabled` to true on the button) AND the styling (i.e. add
+ * a `disabled` CSS class to make it look unclickable)
  */
-
 
 /**
  * Returns id of deck of cards
@@ -36,26 +28,30 @@
                 console.log(deck) 
                 deckId = deck.deck_id;       
                 remainingText.textContent = `Remaining cards: ${deck.remaining}`;
+
             })  
-    }
-    
-    newDeckBtn.addEventListener('click', callback)
-    
-    drawCardBtn.addEventListener('click', function(){
-        fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
+        }
+        
+        newDeckBtn.addEventListener('click', callback)
+        
+        drawCardBtn.addEventListener('click', function(){
+            fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
                 
                 remainingText.textContent = `Remaining cards: ${data.remaining}`;
-            
+                
                 cardsContainer.children[0].innerHTML = `
-                    <img src=${data.cards[0].image} class="card" />` 
-
+                <img src=${data.cards[0].image} class="card" />` 
+                
                 cardsContainer.children[1].innerHTML = `
-                    <img src=${data.cards[1].image} class="card" />` 
-
+                <img src=${data.cards[1].image} class="card" />` 
+                
                 console.log(determineCardWinner(data.cards[0].value, data.cards[1].value))
+                if(data.remaining === 0){
+                    drawCardBtn.disabled = true;
+                }
             })
     });
 
