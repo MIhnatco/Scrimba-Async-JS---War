@@ -1,21 +1,38 @@
 
-    const newDeckBtn = document.getElementById('btn')
-    const drawCardBtn = document.getElementById('draw')
+    const newDeckBtn = document.getElementById('btn');
+    const drawCardBtn = document.getElementById('draw');
     let deckId;
 
-    const cardsContainer = document.getElementById("cards")
-    const winner = document.querySelector('#winner-text')
-    const remainingText = document.querySelector('#remainingCards')
+    const cardsContainer = document.getElementById("cards");
+    const winner = document.querySelector('#winner-text');
+    const remainingText = document.querySelector('#remainingCards');
+
+    const computerScore = document.querySelector("#cpScore");
+    const playerScore = document.querySelector("#playerScore");
+
+    let compScore = 0;
+    let plScore = 0;
+/**
+ * Challenge:
+ * 
+ * Keep score! Every time the computer wins a hand, add a point to
+ * the computer's score. Do the same for every time you win a hand.
+ * If it's a war, no points are awarded to either player. If it's 
+ * a war (same card values), no one is awarded points.
+ * 
+ * Display the computer's score above the top card, display your
+ * own score BELOW the bottom card.
+ * 
+ * Track the scores in a global variable defined at the top of this file
+ * 
+ * Add to the global scores inside the `determineCardWinner` function below.
+ */
 
 /**
  * Challenge:
  * 
- * Disable the Draw button when we have no more cards to draw from
- * in the deck.
- * 
- * Disable both the functionality of the button (i.e. change
- * `disabled` to true on the button) AND the styling (i.e. add
- * a `disabled` CSS class to make it look unclickable)
+ * Display the final winner in the header at the top by
+ * replacing the text of the h2.
  */
 
 /**
@@ -51,6 +68,8 @@
                 console.log(determineCardWinner(data.cards[0].value, data.cards[1].value))
                 if(data.remaining === 0){
                     drawCardBtn.disabled = true;
+
+                    compScore > plScore ? winner.textContent = "The computer won the game!" : compScore < plScore ? winner.textContent = "Congratulation, you win!" : "It's a tie game."
                 }
             })
     });
@@ -70,8 +89,13 @@ function determineCardWinner(card1, card2) {
 
     if (card1ValueIndex > card2ValueIndex){
         winner.textContent = "Computer wins!"
+        compScore++;
+        computerScore.textContent = `Computer score: ${compScore}`;
+
     } else if (card1ValueIndex < card2ValueIndex){
         winner.textContent = "You win!"
+        plScore += 1;
+        playerScore.textContent = `Your score: ${plScore}`;;
     } else {
         winner.textContent = 'War!'
     }
